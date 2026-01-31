@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -112,7 +112,7 @@ function LinkedInIcon() {
 
 export default function HomePage() {
     const manifestoRef = useRef<HTMLElement>(null);
-    const [activeSection, setActiveSection] = React.useState(0);
+    const [activeSection, setActiveSection] = useState(0);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
