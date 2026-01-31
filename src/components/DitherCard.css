@@ -1,0 +1,61 @@
+/* Refactored Classes */
+.dither-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 16px;
+    width: 320px;
+    min-height: 400px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.dither-card-visual {
+    width: 100%;
+    flex: 1;
+    min-height: 240px;
+    position: relative;
+    overflow: hidden;
+}
+
+.dither-card-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+}
+
+.dither-noise-overlay {
+    position: absolute;
+    inset: 0;
+    mix-blend-mode: overlay;
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.dither-gradient-fade {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.dither-card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1;
+}
+
+.dither-card-title {
+    font-family: var(--font-display);
+    margin-bottom: 0.5rem;
+    font-size: var(--text-h3);
+}
+
+.dither-card-subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-body-sm);
+}

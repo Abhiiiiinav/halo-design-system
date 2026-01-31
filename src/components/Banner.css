@@ -1,0 +1,86 @@
+.banner {
+    align-items: start;
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    max-width: 100vw;
+    height: clamp(180px, 35vw, 400px);
+    overflow: hidden;
+    font-family: var(--font-display);
+}
+
+.banner-dithering {
+    flex-shrink: 0;
+    height: 100%;
+    width: 10%;
+}
+
+.banner-dithering--dark {
+    background-color: var(--color-base-black);
+}
+
+.banner-dithering--light {
+    background-color: var(--color-base-white);
+}
+
+.banner-center {
+    box-sizing: border-box;
+    flex-shrink: 0;
+    height: 100%;
+    overflow: visible;
+    position: relative;
+    width: 65%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner-center--dark {
+    background-color: var(--color-base-black);
+}
+
+.banner-center--light {
+    background-color: var(--color-base-white);
+}
+
+/* Logo wrapper - contains both SVG and LiquidMetal */
+.banner-logo-wrapper {
+    position: relative;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner-logo {
+    width: 100%;
+    height: auto;
+}
+
+/* LiquidMetal positioned at the O letter (88% from left of HALO) */
+/* Scale is now calculated dynamically via JavaScript */
+.banner-liquid-metal {
+    position: absolute;
+    left: 88%;
+    top: 50%;
+    transform-origin: center;
+    width: 800px;
+    height: 600px;
+    border-radius: var(--radius-sm);
+    /* Using 2px/sm instead of 1px */
+    filter: saturate(100%);
+}
+
+.banner-image-dithering {
+    flex-shrink: 0;
+    height: 100%;
+    width: 25%;
+}
+
+.banner-image-dithering--dark {
+    background-color: var(--color-base-black);
+}
+
+.banner-image-dithering--light {
+    background-color: var(--color-base-blue-deep);
+}

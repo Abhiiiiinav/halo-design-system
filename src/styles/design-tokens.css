@@ -1,0 +1,170 @@
+:root {
+    /* 0. Primitives (Fixed Palette) */
+    --color-base-black: #000000;
+    --color-base-white: #FDFDFD;
+    --color-base-cream: #FBFDE2;
+    --color-base-green: #274029;
+    --color-base-olive: #D5DAAD;
+    --color-base-mint: #94FFAF;
+    --color-base-lime: #EAFF94;
+    --color-base-blue-deep: #000C38;
+
+    /* 1. Color Palette */
+
+    /* Dark Mode (Default) */
+    --color-background: var(--color-base-black);
+    --color-surface: #0A0A0A;
+    --color-surface-alt: #141414;
+    --color-foreground: #FBFDE2;
+    /* Cream */
+    --color-foreground-muted: #A3A38C;
+    --color-border: #2A2A2A;
+
+    /* Accents */
+    --color-accent-primary: #EAFF94;
+    /* Neon Lime */
+    --color-accent-secondary: #94FFAF;
+    /* Mint */
+    --color-accent-tertiary: #00C38A;
+    --color-dither-dark: #000C38;
+    --color-olive: #D5DAAD;
+    --color-cream: #FDFDFA;
+
+    /* Semantic */
+    --color-success: #94FFAF;
+    --color-warning: #FFD966;
+    --color-error: #FF6B6B;
+    --color-info: #6BB3FF;
+
+    /* 2. Typography */
+    --font-display: 'FK Raster', system-ui, sans-serif;
+    --font-body: 'PP Neue Montreal', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    /* Type Scale */
+    --text-hero: 4.5rem;
+    /* 72px */
+    --text-h1: 3rem;
+    /* 48px */
+    --text-h2: 2.25rem;
+    /* 36px */
+    --text-h3: 1.75rem;
+    /* 28px */
+    --text-h4: 1.5rem;
+    /* 24px */
+    --text-h5: 1.25rem;
+    /* 20px */
+    --text-body-lg: 1.125rem;
+    /* 18px */
+    --text-body: 1rem;
+    /* 16px */
+    --text-body-sm: 0.875rem;
+    /* 14px */
+    --text-caption: 0.75rem;
+    /* 12px */
+    --text-overline: 0.6875rem;
+    /* 11px */
+
+    /* 3. Spacing Scale (4px base) */
+    --space-0: 0px;
+    --space-1: 0.25rem;
+    /* 4px */
+    --space-2: 0.5rem;
+    /* 8px */
+    --space-3: 0.75rem;
+    /* 12px */
+    --space-4: 1rem;
+    /* 16px */
+    --space-5: 1.25rem;
+    /* 20px */
+    --space-6: 1.5rem;
+    /* 24px */
+    --space-8: 2rem;
+    /* 32px */
+    --space-10: 2.5rem;
+    /* 40px */
+    --space-12: 3rem;
+    /* 48px */
+    --space-16: 4rem;
+    /* 64px */
+    --space-20: 5rem;
+    /* 80px */
+    --space-24: 6rem;
+    /* 96px */
+    --space-32: 8rem;
+    /* 128px */
+
+    /* 4. Radius */
+    --radius-none: 0px;
+    --radius-sm: 2px;
+    --radius-md: 5px;
+    /* Button radius */
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    --radius-2xl: 16px;
+    --radius-3xl: 24px;
+    --radius-4xl: 42px;
+    /* Container radius */
+    --radius-full: 9999px;
+
+    /* 5. Borders */
+    --border-width-thin: 1px;
+    --border-width-medium: 2px;
+    --border-width-thick: 3px;
+
+    --border-default: 1px solid var(--color-border);
+    --border-subtle: 1px solid rgba(255, 255, 255, 0.08);
+    --border-emphasis: 2px solid var(--color-foreground);
+    --border-accent: 2px solid var(--color-accent-primary);
+
+    /* 6. Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+    --shadow-md: 0 4px 4px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.35);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 20px rgba(234, 255, 148, 0.2);
+    --shadow-glow-strong: 0 0 40px rgba(234, 255, 148, 0.4);
+    --shadow-text-glow: 0 0 10px rgba(251, 253, 226, 0.5);
+
+    /* 7. Z-Index */
+    --z-base: 0;
+    --z-raised: 10;
+    --z-dropdown: 20;
+    --z-sticky: 30;
+    --z-fixed: 40;
+    --z-modal-backdrop: 50;
+    --z-modal: 60;
+    --z-toast: 80;
+
+    /* 8. Animations */
+    --duration-fast: 100ms;
+    --duration-normal: 200ms;
+    --duration-slow: 300ms;
+
+    --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-all: all var(--duration-normal) var(--ease-default);
+
+    /* 9. Gradients */
+    --gradient-accent: linear-gradient(135deg, var(--color-accent-primary) 0%, var(--color-accent-secondary) 100%);
+    --gradient-olive: linear-gradient(90deg, rgba(213, 218, 173, 0.7) 15.7%, rgba(253, 253, 250, 0.7) 96%);
+    --gradient-dark: linear-gradient(180deg, #000000 0%, #0A0A0A 100%);
+}
+
+/* Light Mode Overrides (Assumes a class or data-theme="light" is applied) */
+[data-theme="light"],
+.light-mode {
+    --color-background: #FDFDFD;
+    --color-surface: #FFFFFF;
+    --color-surface-alt: #F5F5F5;
+    --color-foreground: #274029;
+    /* Forest Green */
+    --color-foreground-muted: #5A7A5C;
+    --color-border: #E0E0E0;
+
+    --border-default: 1px solid var(--color-border);
+    --border-subtle: 1px solid rgba(0, 0, 0, 0.06);
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    /* Adjusted to match light aesthetic or keep 0 4 4 if strict to Figma */
+}

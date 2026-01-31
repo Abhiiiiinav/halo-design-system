@@ -1,0 +1,299 @@
+.duotone-uploader-container {
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 600px;
+    width: 100%;
+    transition: background 0.3s ease;
+}
+
+/* Soft Brutalist Header */
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 24px;
+border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+padding-bottom: 16px;
+flex-wrap: wrap;
+gap: 16px;
+}
+
+.duotone-controls h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Rounded Soft Toggles (Reference Aligned) */
+.theme-toggles {
+    display: flex;
+    gap: 8px;
+    background: transparent;
+    padding: 0;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+@media (max-width: 600px) {
+    .theme-toggles {
+        justify-content: flex-start;
+    }
+}
+
+.theme-btn {
+    background: transparent;
+    border: 1px solid var(--theme-ui-primary);
+    color: var(--theme-ui-primary);
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    opacity: 0.7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-width: 80px;
+    flex: 1;
+}
+
+.theme-btn:hover {
+    opacity: 1;
+    background: color-mix(in srgb, var(--theme-ui-primary), transparent 90%);
+    transform: translateY(-1px);
+}
+
+.theme-btn.active {
+    background: var(--theme-ui-primary);
+    color: var(--theme-ui-on-primary);
+    opacity: 1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: var(--theme-ui-primary);
+    font-weight: 700;
+}
+
+/* Handle Inversion for Active State using CSS Filters or simple Opacity if variables tricky. 
+   Better approach: Use specific classes or opacity since we swap global colors. 
+   For now, we'll settle for high opacity and a bottom border indicator or "filled" look reliant on context.
+   Actually, the JS sets 'color' on the container. We can use that.
+*/
+
+.hidden-input {
+    display: none;
+}
+
+/* Upload Area */
+.upload-btn {
+    width: 100%;
+    padding: 16px;
+    background: transparent;
+    border: 1px dashed var(--theme-ui-primary);
+    color: var(--theme-ui-primary);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+    margin-top: 16px;
+    opacity: 0.7;
+}
+
+.upload-btn:hover {
+    background: color-mix(in srgb, var(--theme-ui-primary), transparent 96%);
+    opacity: 1;
+    border-style: solid;
+}
+
+.duotone-preview-area {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: rgba(128, 128, 128, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(128, 128, 128, 0.1);
+}
+
+.processing-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    color: white;
+    /* Always white text on overlay */
+    gap: 12px;
+    animation: fadeIn 0.2s ease;
+}
+
+.spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #FFF;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--theme-ui-primary);
+    opacity: 0.5;
+    font-size: 0.9rem;
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    gap: 12px;
+}
+
+.image-wrapper {
+    width: 100%;
+    height: 100%;
+    transition: filter 0.3s ease;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* --- Reactive Button Showcase --- */
+.button-showcase {
+    margin-top: 32px;
+    border-top: 1px solid rgba(128, 128, 128, 0.2);
+    padding-top: 24px;
+}
+
+.showcase-label {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    margin-bottom: 20px;
+    display: block;
+    color: var(--theme-ui-primary);
+}
+
+.button-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+/* Base Halo Button */
+.btn-halo {
+    padding: 14px 28px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 
+   REACTIVE STYLES using new UI Var
+*/
+
+/* Primary: Solid Fill */
+.btn-halo-primary {
+    background: var(--theme-ui-primary);
+    color: var(--theme-ui-on-primary);
+    border: 1px solid var(--theme-ui-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.btn-halo-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.btn-halo-primary:active {
+    transform: translateY(0);
+}
+
+/* Outline: Transparent with Theme Border/Text */
+.btn-halo-outline {
+    background: transparent;
+    color: var(--theme-ui-primary);
+    border: 1px solid var(--theme-ui-primary);
+}
+
+.btn-halo-outline:hover {
+    background: var(--theme-ui-primary);
+    color: var(--theme-ui-on-primary);
+}
+
+/* Agentic/Ghost: Subtle tint */
+.btn-halo-agentic {
+    background: color-mix(in srgb, var(--theme-ui-primary), transparent 92%);
+    color: var(--theme-ui-primary);
+    border: 1px solid transparent;
+}
+
+.btn-halo-agentic:hover {
+    background: color-mix(in srgb, var(--theme-ui-primary), transparent 85%);
+    border-color: var(--theme-ui-primary);
+}
+
+/* Inline Button Loader */
+.btn-loader {
+    width: 12px;
+    height: 12px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+    display: inline-block;
+}
