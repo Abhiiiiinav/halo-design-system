@@ -6,7 +6,7 @@
   src: url('/fonts/FK_Raster_Roman_Compact_Smooth.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
-  font-display: block;
+  font-display: optional;
 }
 
 @font-face {
@@ -14,7 +14,7 @@
   src: url('/fonts/PP_Neue_Montreal_Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
-  font-display: block;
+  font-display: optional;
 }
 
 @font-face {
@@ -22,7 +22,7 @@
   src: url('/fonts/PP_Neue_Montreal_Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
-  font-display: block;
+  font-display: optional;
 }
 
 :root {

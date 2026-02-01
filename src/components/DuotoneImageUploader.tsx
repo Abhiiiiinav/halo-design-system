@@ -121,7 +121,7 @@ export default function DuotoneImageUploader() {
             style={{
                 background: currentTheme.bg,
                 color: mode === 'dark' ? '#FFF' : '#000',
-                // @ts-ignore
+                // @ts-expect-error - CSS custom properties not typed
                 '--theme-bg': currentTheme.bg,
                 '--theme-highlight': currentTheme.highlight,
                 '--theme-shadow': currentTheme.shadow,

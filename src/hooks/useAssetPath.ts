@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { getAssetPath, clearAssetCache } from '../utils/getAssetPath';
 
 /**
@@ -15,16 +15,18 @@ export function useAssetPath(
 ): string | null {
     const [resolvedPath, setResolvedPath] = useState<string | null>(null);
 
-    const resolve = useCallback(async () => {
-        // Clear cache to ensure fresh lookup
-        clearAssetCache();
-        const path = await getAssetPath(basePath, imageName);
-        setResolvedPath(path ?? fallbackPath ?? null);
-    }, [basePath, imageName, fallbackPath]);
-
     useEffect(() => {
+        let mounted = true;
+        const resolve = async () => {
+            clearAssetCache();
+            const path = await getAssetPath(basePath, imageName);
+            if (mounted) {
+                setResolvedPath(path ?? fallbackPath ?? null);
+            }
+        };
         resolve();
-    }, [resolve]);
+        return () => { mounted = false; };
+    }, [basePath, imageName, fallbackPath]);
 
     return resolvedPath;
 }

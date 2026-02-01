@@ -140,17 +140,19 @@ function NewsletterForm() {
         setStatus('loading');
 
         try {
-            const { supabase } = await import('../lib/supabase');
+            const { getSupabase } = await import('../lib/supabase');
+            const supabase = getSupabase();
 
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const { error } = await supabase
                 .from('subscribers')
-                .insert([{ email }]);
+                .insert([{ email }] as any);
 
             if (error) {
                 if (error.code === '23505') { // Unique violation
                     setStatus('already_subscribed');
                 } else {
-                    console.error('Supabase error:', error);
+                    console.error('Supabase error:', error.message);
                     setStatus('error');
                 }
             } else {
@@ -158,7 +160,7 @@ function NewsletterForm() {
                 setEmail('');
             }
         } catch (err) {
-            console.error('Signup error:', err);
+            console.error('Newsletter signup error:', err);
             setStatus('error');
         }
     };
@@ -484,10 +486,10 @@ export default function HomePage() {
                     </div>
                     <div className="footer-right">
                         <div className="footer-social">
-                            <a href="https://twitter.com/halofy_ai" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="X (Twitter)">
+                            <a href="#" onClick={(e) => e.preventDefault()} className="social-link" aria-label="X (Twitter)" style={{ cursor: 'default' }}>
                                 <XIcon />
                             </a>
-                            <a href="https://linkedin.com/company/halofy-ai" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="LinkedIn">
+                            <a href="#" onClick={(e) => e.preventDefault()} className="social-link" aria-label="LinkedIn" style={{ cursor: 'default' }}>
                                 <LinkedInIcon />
                             </a>
                         </div>

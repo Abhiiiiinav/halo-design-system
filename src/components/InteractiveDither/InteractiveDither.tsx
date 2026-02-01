@@ -164,7 +164,7 @@ const RetroEffect = forwardRef(({ colorNum, pixelSize }: any, ref) => {
     const { size, gl } = useThree();
 
     // Create effect instance once
-    const effect = useMemo(() => new RetroEffectImpl({ colorNum, pixelSize }), []);
+    const effect = useMemo(() => new RetroEffectImpl({ colorNum, pixelSize }), [colorNum, pixelSize]);
 
     // Handle uniform updates manually
     useEffect(() => {
