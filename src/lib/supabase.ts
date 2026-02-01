@@ -4,7 +4,7 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js'
 export type Database = {
   public: {
     Tables: {
-      subscribers: {
+      Subscribers: {
         Row: { id: number; email: string; created_at: string }
         Insert: { email: string }
         Update: { email?: string }

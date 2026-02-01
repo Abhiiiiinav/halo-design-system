@@ -145,7 +145,7 @@ function NewsletterForm() {
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const { error } = await supabase
-                .from('subscribers')
+                .from('Subscribers')
                 .insert([{ email }] as any);
 
             if (error) {
