@@ -431,7 +431,19 @@
     text-transform: uppercase;
     letter-spacing: 0.15em;
     color: var(--text-color);
-    margin: 0 0 1.5rem;
+    margin: 0 0 1rem;
+}
+
+.newsletter-description {
+    font-family: var(--font-body, 'PP Neue Montreal', system-ui, sans-serif);
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0 0 2rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    filter: blur(0.3px);
+    opacity: 0.8;
 }
 
 .newsletter-form {
@@ -485,6 +497,39 @@
 
 .newsletter-button:active {
     transform: translateY(0);
+}
+
+.newsletter-feedback {
+    margin-top: 1rem;
+    font-size: 0.9375rem;
+    font-family: var(--font-body, 'PP Neue Montreal', system-ui, sans-serif);
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+.newsletter-feedback--success {
+    color: var(--text-color);
+    /* Kept neutral/clean as per design system, potentially can use accent */
+}
+
+.newsletter-feedback--warning {
+    color: var(--text-muted);
+}
+
+.newsletter-feedback--error {
+    color: #e57373;
+    /* Subtle red */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ============================================
@@ -636,6 +681,12 @@
 
     .hero-title {
         font-size: clamp(2rem, 10vw, 3.5rem);
+    }
+
+    /* Reduce CTA button size on mobile */
+    .nav-link--cta {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
     }
 
     .newsletter-form {

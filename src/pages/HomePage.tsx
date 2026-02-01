@@ -15,16 +15,29 @@ function HeaderLogo() {
     const [scale, setScale] = useState(0.015); // Smaller default for header
 
     useEffect(() => {
+        if (!logoRef.current) return;
+
         const calculateScale = () => {
             if (!logoRef.current) return;
+            // Use offsetWidth which is cheaper than getBoundingClientRect regarding reflows if possible, 
+            // but sticking to logic: current used getBoundingClientRect.
+            // ResizeObserverEntry provides contentRect usually, but let's keep logic identical to ensure NO visual change.
             const logoWidth = logoRef.current.getBoundingClientRect().width;
             // O letter inner is ~12% of logo width, shader is 800px
             const oLetterInnerWidth = logoWidth * 0.12;
             setScale(oLetterInnerWidth / 800);
         };
+
+        // Initial calculation
         calculateScale();
-        window.addEventListener('resize', calculateScale);
-        return () => window.removeEventListener('resize', calculateScale);
+
+        const resizeObserver = new ResizeObserver(() => {
+            calculateScale();
+        });
+
+        resizeObserver.observe(logoRef.current);
+
+        return () => resizeObserver.disconnect();
     }, []);
 
     return (
@@ -93,20 +106,91 @@ function FooterLogo() {
     );
 }
 
-// Social icons
-function XIcon() {
-    return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-        </svg>
-    );
-}
 
-function LinkedInIcon() {
+// Social icons removed
+
+function NewsletterForm() {
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error' | 'already_subscribed'>('idle');
+    const [email, setEmail] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setStatus('error'); // Could separate validation error
+            return;
+        }
+
+        setStatus('loading');
+
+        try {
+            const { supabase } = await import('../lib/supabase');
+
+            const { error } = await supabase
+                .from('subscribers')
+                .insert([{ email }]);
+
+            if (error) {
+                if (error.code === '23505') { // Unique violation
+                    setStatus('already_subscribed');
+                } else {
+                    console.error('Supabase error:', error);
+                    setStatus('error');
+                }
+            } else {
+                setStatus('success');
+                setEmail('');
+            }
+        } catch (err) {
+            console.error('Signup error:', err);
+            setStatus('error');
+        }
+    };
+
     return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-        </svg>
+        <div className="newsletter-container">
+            <form className="newsletter-form" onSubmit={handleSubmit}>
+                <input
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (status !== 'idle') setStatus('idle');
+                    }}
+                    placeholder="Enter your email…"
+                    className="newsletter-input"
+                    required
+                    disabled={status === 'loading' || status === 'success'}
+                />
+                <button
+                    type="submit"
+                    className="newsletter-button"
+                    disabled={status === 'loading' || status === 'success'}
+                >
+                    {status === 'loading' ? 'Signing up...' : status === 'success' ? 'Signed Up' : 'Sign Up'}
+                </button>
+            </form>
+
+            {status === 'success' && (
+                <p className="newsletter-feedback newsletter-feedback--success">
+                    You have successfully signed up!
+                </p>
+            )}
+
+            {status === 'already_subscribed' && (
+                <p className="newsletter-feedback newsletter-feedback--warning">
+                    You have already signed up!
+                </p>
+            )}
+
+            {status === 'error' && (
+                <p className="newsletter-feedback newsletter-feedback--error">
+                    Something went wrong. Please try again.
+                </p>
+            )}
+        </div>
     );
 }
 
@@ -199,7 +283,21 @@ export default function HomePage() {
                     <HeaderLogo />
                 </Link>
                 <nav className="header-nav">
-                    <a href="#manifesto" className="nav-link">Memo</a>
+                    <button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            const element = document.getElementById('manifesto');
+                            if (element) {
+                                element.scrollIntoView({ behavior: 'smooth' });
+                                // Explicitly clean URL if hash exists
+                                window.history.pushState("", document.title, window.location.pathname + window.location.search);
+                            }
+                        }}
+                        className="nav-link"
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 'inherit', fontFamily: 'inherit', padding: 0 }}
+                    >
+                        Memo
+                    </button>
                     <a href="mailto:contactus@halofy.ai" className="nav-link nav-link--cta">Contact</a>
                 </nav>
             </header>
@@ -350,17 +448,10 @@ export default function HomePage() {
             {/* Email Signup */}
             <section className="newsletter">
                 <h3 className="newsletter-title">Stay Updated</h3>
-                <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
-                    <input
-                        type="email"
-                        placeholder="Enter your email…"
-                        className="newsletter-input"
-                        required
-                    />
-                    <button type="submit" className="newsletter-button">
-                        Sign Up
-                    </button>
-                </form>
+                <p className="newsletter-description">
+                    Join our mailing list for updates about our products, insights from our team, and get early access!
+                </p>
+                <NewsletterForm />
             </section>
 
             {/* Dither Transition - Sage to Black */}
@@ -374,16 +465,6 @@ export default function HomePage() {
                         <div className="footer-contact">
                             <p className="footer-contact-label">Contact Us</p>
                             <a href="mailto:contactus@halofy.ai" className="footer-email">contactus@halofy.ai</a>
-                        </div>
-                    </div>
-                    <div className="footer-right">
-                        <div className="footer-social">
-                            <a href="https://x.com/halo" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="X (Twitter)">
-                                <XIcon />
-                            </a>
-                            <a href="https://linkedin.com/company/halo" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="LinkedIn">
-                                <LinkedInIcon />
-                            </a>
                         </div>
                     </div>
                 </div>

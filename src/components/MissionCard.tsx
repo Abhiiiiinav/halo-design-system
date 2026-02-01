@@ -26,7 +26,7 @@ export default function MissionCard() {
                     {agenticImage && (
                         <DitheredImage
                             src={agenticImage}
-                            crunch={3} // Matching existing samples
+                            crunch={3}
                             primaryColor={theme.highlight}
                             secondaryColor={theme.shadow}
                             alt="Agentic Economy Infrastructure"
@@ -37,3 +37,4 @@ export default function MissionCard() {
         </section>
     );
 }
+
